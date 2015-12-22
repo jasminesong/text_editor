@@ -55,31 +55,26 @@ public abstract class Document {
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
 		//String[] arr =word.split("[^aeiouy]+");
-		String[] arr =word.split("[^aAeEiIoOuUyY]+");
-		if(arr.length==0){
-			return 0;
-		}
 		
-		int flag =0;
-		
-		if(arr[0]==null||arr[0].equals("")){
-			flag=1;
+		BasicDocument bd = new BasicDocument(word);
+		int vowelNum = bd.getTokens("[aAieEIoOuUyY]+").size();
+		System.out.println(bd.getTokens("[aAiIeEoOuUyY]+"));
+		System.out.println(vowelNum);
+		if(vowelNum ==1){
+			return 1;
+		}else if(word.charAt(word.length()-1)=='e'&&
+				word.toLowerCase().charAt(word.length()-2)!='a'&&
+				word.toLowerCase().charAt(word.length()-2)!='i'&&
+				word.toLowerCase().charAt(word.length()-2)!='o'&&
+				word.toLowerCase().charAt(word.length()-2)!='y'&&
+				word.toLowerCase().charAt(word.length()-2)!='e'&&
+				word.toLowerCase().charAt(word.length()-2)!='u'){
+			
+			System.out.println("in else");
+			return vowelNum -1;
 		}
+		return vowelNum;
 		
-		//if(!arr[arr.length-1].equals("e")){
-		if(word.charAt(word.length()-1) != 'e' || !arr[arr.length-1].equals("e")){
-				return arr.length-flag;
-		}else if(arr.length==1){
-				return 1;
-		}else if(arr.length==2){
-			if(flag==1) {//be
-                return 1;
-            }else{//are
-                return 1;
-            }
-		}else{
-			return arr.length-1-flag;
-		}
 	}
 	
 	/** A method for testing
